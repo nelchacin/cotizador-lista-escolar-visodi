@@ -11,7 +11,8 @@ Requiere: pip3 install xlrd
 El Excel debe tener las columnas (fila 1 como encabezado):
     Código | Descripción | Cantidad | Precio | I.V.A. | Neto
 
-El precio publicado es el precio final: Precio base + I.V.A., redondeado a 2 decimales.
+Se publican por separado el precio base y el monto de I.V.A. por unidad
+(ambos redondeados a 2 decimales); la página los desglosa en la cotización.
 """
 import json
 import sys
@@ -37,10 +38,9 @@ def main():
         # Los códigos de barras numéricos llegan como float ("7592456000022.0")
         if codigo.endswith(".0"):
             codigo = codigo[:-2]
-        precio_base = float(sh.cell_value(r, 4))
-        iva = float(sh.cell_value(r, 5))
-        precio_final = round(precio_base + iva, 2)
-        productos.append({"codigo": codigo, "nombre": nombre, "precio": precio_final})
+        precio_base = round(float(sh.cell_value(r, 4)), 2)
+        iva = round(float(sh.cell_value(r, 5)), 2)
+        productos.append({"codigo": codigo, "nombre": nombre, "precio": precio_base, "iva": iva})
 
     productos.sort(key=lambda p: p["nombre"])
 
@@ -49,7 +49,7 @@ def main():
     )
     contenido = (
         "// Generado por tools/generar_productos.py — no editar a mano.\n"
-        "// Precios finales con IVA incluido (USD).\n"
+        "// precio = base sin IVA; iva = monto de IVA por unidad (USD).\n"
         "const PRODUCTOS = [\n" + filas + "\n];\n"
     )
     salida = "js/productos.js"

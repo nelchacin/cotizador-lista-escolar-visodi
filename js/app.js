@@ -106,6 +106,10 @@
     var precio = document.createElement("p");
     precio.className = "producto-precio";
     precio.textContent = dinero(p.precio);
+    var notaIva = document.createElement("span");
+    notaIva.className = "producto-iva";
+    notaIva.textContent = p.iva > 0 ? "+ IVA" : "exento de IVA";
+    precio.appendChild(notaIva);
 
     /* Pie de tarjeta: control − n + */
     var pie = document.createElement("div");
@@ -177,36 +181,33 @@
 
   /* ---------- Totales ---------- */
   function calcularTotales() {
-    var articulos = 0, monto = 0;
+    var articulos = 0, base = 0, iva = 0;
     PRODUCTOS.forEach(function (p) {
       var c = cantidades[p.codigo] || 0;
-      if (c > 0) { articulos += c; monto += c * p.precio; }
+      if (c > 0) { articulos += c; base += c * p.precio; iva += c * p.iva; }
     });
-    return { articulos: articulos, monto: monto };
+    return { articulos: articulos, base: base, iva: iva, total: base + iva };
   }
 
   function pintarBarraTotal() {
     var t = calcularTotales();
     var barra = porId("barra-total");
     barra.hidden = t.articulos === 0;
-    porId("total-articulos").textContent = t.articulos + (t.articulos === 1 ? " artículo" : " artículos");
-    porId("total-monto").textContent = dinero(t.monto);
+    porId("total-articulos").textContent = t.articulos + (t.articulos === 1 ? " artículo" : " artículos") + " · IVA incluido";
+    porId("total-monto").textContent = dinero(t.total);
   }
 
   /* ---------- Cotización ---------- */
   function pintarCotizacion() {
     var cuerpo = porId("cuerpo-cotizacion");
     cuerpo.innerHTML = "";
-    var total = 0;
 
     PRODUCTOS.forEach(function (p) {
       var c = cantidades[p.codigo] || 0;
       if (c === 0) return;
-      var subtotal = c * p.precio;
-      total += subtotal;
 
       var tr = document.createElement("tr");
-      [nombreBonito(p.nombre), c, dinero(p.precio), dinero(subtotal)].forEach(function (valor, i) {
+      [nombreBonito(p.nombre), c, dinero(p.precio), dinero(c * p.precio)].forEach(function (valor, i) {
         var td = document.createElement("td");
         if (i > 0) td.className = "col-num";
         td.textContent = valor;
@@ -215,7 +216,10 @@
       cuerpo.appendChild(tr);
     });
 
-    porId("total-cotizacion").textContent = dinero(total);
+    var t = calcularTotales();
+    porId("subtotal-cotizacion").textContent = dinero(t.base);
+    porId("iva-cotizacion").textContent = dinero(t.iva);
+    porId("total-cotizacion").textContent = dinero(t.total);
     porId("fecha-cotizacion").textContent = new Date().toLocaleDateString("es-VE", {
       day: "2-digit", month: "long", year: "numeric"
     });

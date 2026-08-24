@@ -243,6 +243,16 @@ main {
   font-variant-numeric: tabular-nums;
 }
 
+.producto-iva {
+  margin-left: 6px;
+  font-family: var(--fuente-texto);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
 /* ---------- Pie de tarjeta: control − n + ---------- */
 .producto-pie { flex-shrink: 0; width: 132px; }
 
@@ -493,6 +503,14 @@ main {
   text-align: right;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
+}
+
+.fila-resumen {
+  font-weight: 700;
+  color: var(--texto-suave);
+  border-bottom: none !important;
+  padding-top: 10px !important;
+  padding-bottom: 2px !important;
 }
 
 .fila-total {

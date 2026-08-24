@@ -20,7 +20,7 @@ En 1–2 minutos GitHub Pages refresca el link automáticamente. Nada más que h
 
 ## Qué incluye
 
-- Catálogo de **97 productos escolares** con precios finales (IVA incluido, USD).
+- Catálogo de **97 productos escolares** con precio base en USD; el I.V.A. se muestra desglosado en la cotización (subtotal + IVA + total).
 - Buscador por nombre o código y filtros por categoría (cuadernos, escritura, pegas, papeles, arte, carpetas…).
 - Botones **− / +** para las cantidades, con el total siempre visible abajo.
 - Cotización con nombre del cliente, fecha, tabla de productos y total, lista para **descargar/imprimir en PDF**.
@@ -53,7 +53,7 @@ pip3 install xlrd   # solo la primera vez
 python3 tools/generar_productos.py "/ruta/al/Listado de precios.xls"
 ```
 
-El script lee las columnas Código / Descripción / Precio / I.V.A. y escribe el precio final (base + IVA, 2 decimales). Luego se vuelve a subir `js/productos.js` al hosting.
+El script lee las columnas Código / Descripción / Precio / I.V.A. y escribe el precio base y el IVA por unidad (2 decimales). Luego `git push` y la página se actualiza sola.
 
 ## Estructura
 

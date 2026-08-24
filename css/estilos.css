@@ -476,6 +476,7 @@ main {
 .tabla-cotizacion {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
   font-size: 0.92rem;
 }
 
@@ -489,12 +490,22 @@ main {
   font-size: 0.85rem;
 }
 
+/* Anchos fijos: la columna Producto absorbe el resto */
+.tabla-cotizacion th:nth-child(2) { width: 9%; }
+.tabla-cotizacion th:nth-child(3),
+.tabla-cotizacion th:nth-child(4),
+.tabla-cotizacion th:nth-child(5) { width: 15%; }
+
+/* Encabezados numéricos alineados igual que sus números */
+.tabla-cotizacion th.col-num { text-align: right; }
+
 .tabla-cotizacion th:first-child { border-radius: 10px 0 0 10px; }
 .tabla-cotizacion th:last-child { border-radius: 0 10px 10px 0; }
 
 .tabla-cotizacion td {
   padding: 10px 12px;
   border-bottom: 1px solid var(--borde);
+  overflow-wrap: break-word;
 }
 
 .tabla-cotizacion tbody tr:nth-child(even) { background: #FAFBFE; }
@@ -521,6 +532,17 @@ main {
   background: var(--amarillo-suave);
   border-bottom: none !important;
   padding-top: 14px !important;
+}
+
+/* En pantallas angostas la tabla se compacta para que las 5 columnas cuadren */
+@media (max-width: 480px) {
+  .tabla-cotizacion { font-size: 0.78rem; }
+  .tabla-cotizacion th,
+  .tabla-cotizacion td { padding: 8px 6px; }
+  .tabla-cotizacion th:nth-child(2) { width: 11%; }
+  .tabla-cotizacion th:nth-child(3),
+  .tabla-cotizacion th:nth-child(4),
+  .tabla-cotizacion th:nth-child(5) { width: 16%; }
 }
 
 .hoja-nota {

@@ -4,6 +4,20 @@ Página web donde el cliente arma su lista escolar por su cuenta: entra al link,
 
 **VISODI El Chalet del Cartucho C.A.** · La Gran Papelería de Venezuela · [visodi.com](https://www.visodi.com)
 
+**🌐 Página en vivo:** https://nelchacin.github.io/cotizador-lista-escolar-visodi/
+
+## Cómo actualizar la página publicada
+
+La página se publica con GitHub Pages desde la rama `main`. Cualquier cambio se actualiza así:
+
+```bash
+git add -A
+git commit -m "descripción del cambio"
+git push
+```
+
+En 1–2 minutos GitHub Pages refresca el link automáticamente. Nada más que hacer.
+
 ## Qué incluye
 
 - Catálogo de **97 productos escolares** con precios finales (IVA incluido, USD).

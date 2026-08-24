@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cotiza tu Lista Escolar — VISODI</title>
+  <meta name="description" content="Arma tu lista escolar y genera tu cotización al instante. VISODI, La Gran Papelería de Venezuela.">
+  <link rel="icon" href="img/logo-visodi.png">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <!-- ============ PANTALLA PRINCIPAL: CATÁLOGO ============ -->
+  <div id="pantalla-catalogo">
+    <header class="cabecera">
+      <img src="img/logo-visodi.png" alt="VISODI" class="cabecera-logo">
+      <div class="cabecera-textos">
+        <h1>Cotiza tu Lista Escolar</h1>
+        <p>La Gran Papelería de Venezuela</p>
+      </div>
+    </header>
+
+    <div class="barra-filtros">
+      <input type="search" id="buscador" placeholder="Buscar producto… (ej: cuaderno, pega, creyones)" autocomplete="off">
+      <div id="categorias" class="chips"></div>
+    </div>
+
+    <main>
+      <ul id="lista-productos" class="lista-productos"></ul>
+      <p id="sin-resultados" class="sin-resultados" hidden>No encontramos productos con esa búsqueda.</p>
+    </main>
+
+    <footer class="pie">
+      <p>VISODI EL CHALET DEL CARTUCHO C.A. · RIF J-29951898-0</p>
+      <p>WhatsApp <a href="https://wa.me/584129050068">+58 412-9050068</a> · <a href="https://www.visodi.com">visodi.com</a></p>
+    </footer>
+
+    <div id="barra-total" class="barra-total" hidden>
+      <div class="barra-total-info">
+        <span id="total-articulos">0 artículos</span>
+        <strong id="total-monto">$0,00</strong>
+      </div>
+      <button id="btn-ver-cotizacion" class="btn btn-primario">Ver mi cotización</button>
+    </div>
+  </div>
+
+  <!-- ============ PANTALLA: COTIZACIÓN ============ -->
+  <div id="pantalla-cotizacion" hidden>
+    <div class="cotizacion-acciones no-imprimir">
+      <button id="btn-volver" class="btn btn-secundario">← Seguir agregando</button>
+      <button id="btn-pdf" class="btn btn-primario">Descargar PDF</button>
+      <button id="btn-vaciar" class="btn btn-peligro">Vaciar lista</button>
+    </div>
+
+    <div class="hoja" id="hoja-cotizacion">
+      <div class="hoja-cabecera">
+        <img src="img/logo-visodi.png" alt="VISODI" class="hoja-logo">
+        <div>
+          <h2>Cotización de Lista Escolar</h2>
+          <p class="hoja-sub">VISODI EL CHALET DEL CARTUCHO C.A. · RIF J-29951898-0</p>
+          <p class="hoja-sub">WhatsApp +58 412-9050068 · www.visodi.com</p>
+        </div>
+      </div>
+
+      <div class="hoja-datos">
+        <label class="campo-nombre no-imprimir" for="nombre-cliente">
+          Nombre del representante o alumno (opcional):
+        </label>
+        <input type="text" id="nombre-cliente" class="input-nombre no-imprimir" placeholder="Escribe el nombre aquí" autocomplete="name">
+        <p id="nombre-impreso" class="solo-imprimir"></p>
+        <p>Fecha: <span id="fecha-cotizacion"></span></p>
+      </div>
+
+      <table class="tabla-cotizacion">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th class="col-num">Cant.</th>
+            <th class="col-num">Precio</th>
+            <th class="col-num">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpo-cotizacion"></tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3" class="fila-total">TOTAL</td>
+            <td class="col-num fila-total" id="total-cotizacion">$0,00</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <p class="hoja-nota">
+        Precios en USD con IVA incluido. Cotización referencial sujeta a disponibilidad de inventario.
+        Presenta esta cotización en tienda o escríbenos por WhatsApp al +58 412-9050068.
+      </p>
+    </div>
+  </div>
+
+  <script src="js/productos.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

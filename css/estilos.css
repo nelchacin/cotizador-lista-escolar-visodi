@@ -536,13 +536,24 @@ main {
 
 /* En pantallas angostas la tabla se compacta para que las 5 columnas cuadren */
 @media (max-width: 480px) {
+  .hoja { padding: 18px 12px; }
+
   .tabla-cotizacion { font-size: 0.78rem; }
   .tabla-cotizacion th,
-  .tabla-cotizacion td { padding: 8px 6px; }
-  .tabla-cotizacion th:nth-child(2) { width: 11%; }
+  .tabla-cotizacion td { padding: 8px 4px; }
+  .tabla-cotizacion th { font-size: 0.7rem; }
+  .tabla-cotizacion th:first-child,
+  .tabla-cotizacion td:first-child { padding-left: 8px; }
+  .tabla-cotizacion th:last-child,
+  .tabla-cotizacion td:last-child { padding-right: 8px; }
+
+  .tabla-cotizacion th:nth-child(2) { width: 10%; }
   .tabla-cotizacion th:nth-child(3),
-  .tabla-cotizacion th:nth-child(4),
-  .tabla-cotizacion th:nth-child(5) { width: 16%; }
+  .tabla-cotizacion th:nth-child(4) { width: 16%; }
+  .tabla-cotizacion th:nth-child(5) { width: 20%; }
+
+  .fila-resumen { font-size: 0.82rem; }
+  .fila-total { font-size: 0.95rem; }
 }
 
 .hoja-nota {

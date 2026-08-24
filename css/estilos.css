@@ -59,11 +59,6 @@ button { font-family: inherit; cursor: pointer; }
   from { transform: translateY(120%); }
   to   { transform: translateY(0); }
 }
-@keyframes brotar {
-  from { opacity: 0; transform: scale(0.9); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -248,23 +243,8 @@ main {
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- Pie de tarjeta: Agregar ↔ cantidad ---------- */
+/* ---------- Pie de tarjeta: control − n + ---------- */
 .producto-pie { flex-shrink: 0; width: 132px; }
-
-.btn-agregar {
-  width: 100%;
-  min-height: 44px;
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: var(--azul-oscuro);
-  background: var(--amarillo);
-  border: none;
-  border-radius: 12px;
-  transition: filter var(--transicion), transform 120ms ease-out;
-}
-
-.btn-agregar:hover { filter: brightness(0.95); }
-.btn-agregar:active { transform: scale(0.96); }
 
 .control-cantidad {
   display: flex;
@@ -274,7 +254,6 @@ main {
   background: var(--azul-claro);
   border-radius: 12px;
   padding: 3px;
-  animation: brotar 180ms ease-out both;
 }
 
 .btn-cantidad {
@@ -283,15 +262,23 @@ main {
   font-size: 1.35rem;
   font-weight: 700;
   line-height: 1;
-  color: #fff;
-  background: var(--azul);
+  color: var(--azul);
+  background: #fff;
   border: none;
   border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(28, 63, 148, 0.15);
   transition: background var(--transicion), transform 120ms ease-out;
 }
 
-.btn-cantidad:hover { background: var(--azul-oscuro); }
+.btn-cantidad:hover { background: var(--amarillo-suave); }
 .btn-cantidad:active { transform: scale(0.9); }
+
+/* el + en amarillo de marca */
+.btn-cantidad:last-child {
+  background: var(--amarillo);
+  color: var(--azul-oscuro);
+}
+.btn-cantidad:last-child:hover { filter: brightness(0.95); }
 
 .cantidad {
   min-width: 32px;

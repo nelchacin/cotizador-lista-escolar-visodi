@@ -107,16 +107,9 @@
     precio.className = "producto-precio";
     precio.textContent = dinero(p.precio);
 
-    /* Pie de tarjeta: botón "Agregar" o control − n + */
+    /* Pie de tarjeta: control − n + */
     var pie = document.createElement("div");
     pie.className = "producto-pie";
-
-    var agregar = document.createElement("button");
-    agregar.type = "button";
-    agregar.className = "btn-agregar";
-    agregar.textContent = "Agregar";
-    agregar.setAttribute("aria-label", "Agregar " + p.nombre);
-    agregar.addEventListener("click", function () { cambiarCantidad(p, 1); });
 
     var control = document.createElement("div");
     control.className = "control-cantidad";
@@ -142,7 +135,6 @@
     control.appendChild(num);
     control.appendChild(mas);
 
-    pie.appendChild(agregar);
     pie.appendChild(control);
 
     info.appendChild(nombre);
@@ -150,7 +142,7 @@
     li.appendChild(info);
     li.appendChild(pie);
 
-    tarjetas[p.codigo] = { li: li, agregar: agregar, control: control, num: num };
+    tarjetas[p.codigo] = { li: li, num: num };
     actualizarTarjeta(p.codigo);
     return li;
   }
@@ -162,8 +154,6 @@
     if (!t) return;
     var cant = cantidades[codigo] || 0;
     t.li.classList.toggle("producto-elegido", cant > 0);
-    t.agregar.hidden = cant > 0;
-    t.control.hidden = cant === 0;
     t.num.textContent = cant;
   }
 

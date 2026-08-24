@@ -207,7 +207,7 @@
       if (c === 0) return;
 
       var tr = document.createElement("tr");
-      [nombreBonito(p.nombre), c, dinero(p.precio), dinero(c * p.precio)].forEach(function (valor, i) {
+      [nombreBonito(p.nombre), c, dinero(p.precio), p.iva > 0 ? dinero(c * p.iva) : "Exento", dinero(c * p.precio)].forEach(function (valor, i) {
         var td = document.createElement("td");
         if (i > 0) td.className = "col-num";
         td.textContent = valor;

@@ -30,6 +30,7 @@
   var cantidades = {};            // codigo -> cantidad
   var filtroTexto = "";
   var filtroCategoria = "Todos";
+  var tarjetas = {};              // codigo -> referencias DOM de la tarjeta visible
 
   function cargarEstado() {
     try {
@@ -52,6 +53,12 @@
   }
 
   function porId(id) { return document.getElementById(id); }
+
+  function nombreBonito(t) {
+    return t.toLowerCase().replace(/(^|[\s(/"])([a-záéíóúñü])/g, function (m, sep, letra) {
+      return sep + letra.toUpperCase();
+    });
+  }
 
   /* ---------- Render de categorías ---------- */
   function pintarCategorias() {
@@ -85,66 +92,96 @@
     });
   }
 
+  function crearTarjeta(p) {
+    var li = document.createElement("li");
+    li.className = "producto";
+
+    var info = document.createElement("div");
+    info.className = "producto-info";
+
+    var nombre = document.createElement("p");
+    nombre.className = "producto-nombre";
+    nombre.textContent = nombreBonito(p.nombre);
+
+    var precio = document.createElement("p");
+    precio.className = "producto-precio";
+    precio.textContent = dinero(p.precio);
+
+    /* Pie de tarjeta: botón "Agregar" o control − n + */
+    var pie = document.createElement("div");
+    pie.className = "producto-pie";
+
+    var agregar = document.createElement("button");
+    agregar.type = "button";
+    agregar.className = "btn-agregar";
+    agregar.textContent = "Agregar";
+    agregar.setAttribute("aria-label", "Agregar " + p.nombre);
+    agregar.addEventListener("click", function () { cambiarCantidad(p, 1); });
+
+    var control = document.createElement("div");
+    control.className = "control-cantidad";
+
+    var menos = document.createElement("button");
+    menos.type = "button";
+    menos.className = "btn-cantidad";
+    menos.textContent = "−";
+    menos.setAttribute("aria-label", "Quitar " + p.nombre);
+    menos.addEventListener("click", function () { cambiarCantidad(p, -1); });
+
+    var num = document.createElement("span");
+    num.className = "cantidad";
+
+    var mas = document.createElement("button");
+    mas.type = "button";
+    mas.className = "btn-cantidad";
+    mas.textContent = "+";
+    mas.setAttribute("aria-label", "Agregar otro " + p.nombre);
+    mas.addEventListener("click", function () { cambiarCantidad(p, 1); });
+
+    control.appendChild(menos);
+    control.appendChild(num);
+    control.appendChild(mas);
+
+    pie.appendChild(agregar);
+    pie.appendChild(control);
+
+    info.appendChild(nombre);
+    info.appendChild(precio);
+    li.appendChild(info);
+    li.appendChild(pie);
+
+    tarjetas[p.codigo] = { li: li, agregar: agregar, control: control, num: num };
+    actualizarTarjeta(p.codigo);
+    return li;
+  }
+
+  /* Actualiza SOLO una tarjeta (sin repintar la lista: evita que la
+     animación de entrada se repita al tocar − / +). */
+  function actualizarTarjeta(codigo) {
+    var t = tarjetas[codigo];
+    if (!t) return;
+    var cant = cantidades[codigo] || 0;
+    t.li.classList.toggle("producto-elegido", cant > 0);
+    t.agregar.hidden = cant > 0;
+    t.control.hidden = cant === 0;
+    t.num.textContent = cant;
+  }
+
   function pintarProductos() {
     var lista = porId("lista-productos");
     lista.innerHTML = "";
+    tarjetas = {};
     var visibles = productosFiltrados();
     porId("sin-resultados").hidden = visibles.length > 0;
-
-    visibles.forEach(function (p) {
-      var cant = cantidades[p.codigo] || 0;
-
-      var li = document.createElement("li");
-      li.className = "producto" + (cant > 0 ? " producto-elegido" : "");
-
-      var info = document.createElement("div");
-      info.className = "producto-info";
-      var nombre = document.createElement("p");
-      nombre.className = "producto-nombre";
-      nombre.textContent = p.nombre;
-      var precio = document.createElement("p");
-      precio.className = "producto-precio";
-      precio.textContent = dinero(p.precio);
-      info.appendChild(nombre);
-      info.appendChild(precio);
-
-      var control = document.createElement("div");
-      control.className = "control-cantidad";
-
-      var menos = document.createElement("button");
-      menos.type = "button";
-      menos.className = "btn-cantidad";
-      menos.textContent = "−";
-      menos.setAttribute("aria-label", "Quitar " + p.nombre);
-      menos.addEventListener("click", function () { cambiarCantidad(p.codigo, -1); });
-
-      var num = document.createElement("span");
-      num.className = "cantidad";
-      num.textContent = cant;
-
-      var mas = document.createElement("button");
-      mas.type = "button";
-      mas.className = "btn-cantidad btn-mas";
-      mas.textContent = "+";
-      mas.setAttribute("aria-label", "Agregar " + p.nombre);
-      mas.addEventListener("click", function () { cambiarCantidad(p.codigo, 1); });
-
-      control.appendChild(menos);
-      control.appendChild(num);
-      control.appendChild(mas);
-
-      li.appendChild(info);
-      li.appendChild(control);
-      lista.appendChild(li);
-    });
+    visibles.forEach(function (p) { lista.appendChild(crearTarjeta(p)); });
   }
 
-  function cambiarCantidad(codigo, delta) {
-    var nueva = (cantidades[codigo] || 0) + delta;
-    if (nueva <= 0) delete cantidades[codigo];
-    else cantidades[codigo] = nueva;
+  function cambiarCantidad(p, delta) {
+    var nueva = (cantidades[p.codigo] || 0) + delta;
+    if (nueva <= 0) delete cantidades[p.codigo];
+    else cantidades[p.codigo] = nueva;
     guardarEstado();
-    pintarProductos();
+    actualizarTarjeta(p.codigo);
     pintarBarraTotal();
   }
 
@@ -179,7 +216,7 @@
       total += subtotal;
 
       var tr = document.createElement("tr");
-      [p.nombre, c, dinero(p.precio), dinero(subtotal)].forEach(function (valor, i) {
+      [nombreBonito(p.nombre), c, dinero(p.precio), dinero(subtotal)].forEach(function (valor, i) {
         var td = document.createElement("td");
         if (i > 0) td.className = "col-num";
         td.textContent = valor;

@@ -1,29 +1,29 @@
 /* ============================================================
    Auto-cotizador de Lista Escolar — VISODI
+   Marca: azul #1C3F94 · amarillo #FFDF05 (visodi.com)
    Mobile-first · breakpoints 768 / 1024 / 1440
    ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Rubik:wght@500;600;700&display=swap');
 
 :root {
   /* Marca */
-  --azul: #1C3F95;
-  --azul-oscuro: #152F70;
-  --azul-claro: #EAF0FF;
-  --acento: #F97316;
-  --acento-oscuro: #DD5F07;
+  --azul: #1C3F94;
+  --azul-oscuro: #14306F;
+  --azul-claro: #ECF1FC;
+  --amarillo: #FFDF05;
+  --amarillo-suave: #FFF9D6;
 
   /* Neutros */
-  --fondo: #F5F7FB;
+  --fondo: #F7F8FC;
   --superficie: #FFFFFF;
-  --texto: #1E293B;
-  --texto-suave: #5B6779;
-  --borde: #DDE4F0;
-  --exito: #15803D;
+  --texto: #253352;
+  --texto-suave: #6B7590;
+  --borde: #E5E9F4;
 
   /* Sistema */
-  --radio: 14px;
-  --sombra: 0 1px 3px rgba(21, 47, 112, 0.08), 0 4px 14px rgba(21, 47, 112, 0.06);
-  --sombra-alta: 0 8px 30px rgba(21, 47, 112, 0.18);
+  --radio: 18px;
+  --sombra: 0 2px 10px rgba(28, 63, 148, 0.07);
+  --sombra-alta: 0 10px 28px rgba(28, 63, 148, 0.16);
   --transicion: 200ms ease-out;
   --fuente-titulos: "Rubik", "Segoe UI", sans-serif;
   --fuente-texto: "Nunito Sans", "Segoe UI", sans-serif;
@@ -46,18 +46,22 @@ body {
 button { font-family: inherit; cursor: pointer; }
 
 :focus-visible {
-  outline: 3px solid var(--acento);
+  outline: 3px solid var(--azul);
   outline-offset: 2px;
 }
 
 /* ---------- Animaciones ---------- */
 @keyframes aparecer {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes subir-barra {
-  from { transform: translateY(110%); }
+  from { transform: translateY(120%); }
   to   { transform: translateY(0); }
+}
+@keyframes brotar {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -73,8 +77,9 @@ button { font-family: inherit; cursor: pointer; }
    ============================================================ */
 .cabecera {
   background: linear-gradient(135deg, var(--azul) 0%, var(--azul-oscuro) 100%);
+  border-bottom: 4px solid var(--amarillo);
   color: #fff;
-  padding: 20px 16px 24px;
+  padding: 22px 16px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -85,22 +90,23 @@ button { font-family: inherit; cursor: pointer; }
   height: 44px;
   width: auto;
   background: #fff;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 8px 10px;
   flex-shrink: 0;
 }
 
 .cabecera-textos h1 {
   font-family: var(--fuente-titulos);
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   line-height: 1.2;
   margin: 0 0 2px;
 }
 
 .cabecera-textos p {
   margin: 0;
-  font-size: 0.9rem;
-  opacity: 0.85;
+  font-size: 0.88rem;
+  color: var(--amarillo);
+  font-weight: 700;
 }
 
 /* ============================================================
@@ -110,24 +116,27 @@ button { font-family: inherit; cursor: pointer; }
   position: sticky;
   top: 0;
   z-index: 40;
-  background: var(--fondo);
-  padding: 12px 16px 10px;
-  border-bottom: 1px solid var(--borde);
+  background: rgba(247, 248, 252, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 12px 16px 8px;
 }
 
 #buscador {
   width: 100%;
-  min-height: 48px;
-  padding: 12px 16px;
+  min-height: 50px;
+  padding: 13px 18px;
   font-size: 1rem;
   font-family: inherit;
   color: var(--texto);
   background: var(--superficie);
   border: 2px solid var(--borde);
-  border-radius: var(--radio);
+  border-radius: 999px;
   transition: border-color var(--transicion), box-shadow var(--transicion);
   -webkit-appearance: none;
 }
+
+#buscador::placeholder { color: var(--texto-suave); }
 
 #buscador:focus {
   outline: none;
@@ -139,7 +148,7 @@ button { font-family: inherit; cursor: pointer; }
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding: 10px 2px 4px;
+  padding: 10px 2px 6px;
   scrollbar-width: none;
 }
 .chips::-webkit-scrollbar { display: none; }
@@ -149,7 +158,7 @@ button { font-family: inherit; cursor: pointer; }
   min-height: 40px;
   padding: 8px 16px;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--azul);
   background: var(--superficie);
   border: 2px solid var(--borde);
@@ -158,24 +167,25 @@ button { font-family: inherit; cursor: pointer; }
               border-color var(--transicion), transform 150ms ease-out;
 }
 
-.chip:hover { border-color: var(--azul); }
+.chip:hover { border-color: var(--amarillo); background: var(--amarillo-suave); }
 .chip:active { transform: scale(0.96); }
 
-.chip-activo {
+.chip-activo,
+.chip-activo:hover {
   background: var(--azul);
   border-color: var(--azul);
   color: #fff;
 }
 
 /* ============================================================
-   LISTA DE PRODUCTOS
+   LISTA DE PRODUCTOS (tarjetas con foto)
    ============================================================ */
 main {
-  padding: 16px;
+  padding: 12px 16px;
   max-width: 1280px;
   margin: 0 auto;
   /* espacio para la barra de total fija */
-  padding-bottom: 110px;
+  padding-bottom: 120px;
 }
 
 .lista-productos {
@@ -184,14 +194,14 @@ main {
   padding: 0;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 10px;
 }
 
 .producto {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 14px;
   background: var(--superficie);
   border: 2px solid transparent;
   border-radius: var(--radio);
@@ -203,78 +213,93 @@ main {
 }
 
 /* entrada escalonada sutil de las primeras tarjetas */
-.producto:nth-child(1) { animation-delay: 30ms; }
-.producto:nth-child(2) { animation-delay: 60ms; }
-.producto:nth-child(3) { animation-delay: 90ms; }
-.producto:nth-child(4) { animation-delay: 120ms; }
-.producto:nth-child(5) { animation-delay: 150ms; }
+.producto:nth-child(1) { animation-delay: 25ms; }
+.producto:nth-child(2) { animation-delay: 50ms; }
+.producto:nth-child(3) { animation-delay: 75ms; }
+.producto:nth-child(4) { animation-delay: 100ms; }
+.producto:nth-child(5) { animation-delay: 125ms; }
+.producto:nth-child(6) { animation-delay: 150ms; }
 
 .producto:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--sombra-alta);
 }
 
 .producto-elegido {
-  border-color: var(--azul);
-  background: var(--azul-claro);
+  border-color: var(--amarillo);
+  background: #FFFDF0;
 }
 
-.producto-info { min-width: 0; }
+.producto-info { min-width: 0; flex: 1; }
 
 .producto-nombre {
-  margin: 0 0 4px;
+  margin: 0;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.35;
 }
 
 .producto-precio {
-  margin: 0;
+  margin: 3px 0 0;
   font-family: var(--fuente-titulos);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1.05rem;
   color: var(--azul);
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- Control de cantidad ---------- */
+/* ---------- Pie de tarjeta: Agregar ↔ cantidad ---------- */
+.producto-pie { flex-shrink: 0; width: 132px; }
+
+.btn-agregar {
+  width: 100%;
+  min-height: 44px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--azul-oscuro);
+  background: var(--amarillo);
+  border: none;
+  border-radius: 12px;
+  transition: filter var(--transicion), transform 120ms ease-out;
+}
+
+.btn-agregar:hover { filter: brightness(0.95); }
+.btn-agregar:active { transform: scale(0.96); }
+
 .control-cantidad {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 4px;
-  flex-shrink: 0;
+  background: var(--azul-claro);
+  border-radius: 12px;
+  padding: 3px;
+  animation: brotar 180ms ease-out both;
 }
 
 .btn-cantidad {
   width: 44px;
-  height: 44px;
-  font-size: 1.4rem;
+  height: 40px;
+  font-size: 1.35rem;
   font-weight: 700;
   line-height: 1;
-  color: var(--azul);
-  background: var(--superficie);
-  border: 2px solid var(--borde);
-  border-radius: 12px;
-  transition: background var(--transicion), border-color var(--transicion),
-              transform 120ms ease-out;
-}
-
-.btn-cantidad:hover { border-color: var(--azul); background: var(--azul-claro); }
-.btn-cantidad:active { transform: scale(0.92); }
-
-.btn-mas {
-  background: var(--azul);
-  border-color: var(--azul);
   color: #fff;
+  background: var(--azul);
+  border: none;
+  border-radius: 10px;
+  transition: background var(--transicion), transform 120ms ease-out;
 }
-.btn-mas:hover { background: var(--azul-oscuro); border-color: var(--azul-oscuro); }
+
+.btn-cantidad:hover { background: var(--azul-oscuro); }
+.btn-cantidad:active { transform: scale(0.9); }
 
 .cantidad {
-  min-width: 36px;
+  min-width: 32px;
   text-align: center;
   font-family: var(--fuente-titulos);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1.1rem;
+  color: var(--azul-oscuro);
   font-variant-numeric: tabular-nums;
 }
 
@@ -290,19 +315,19 @@ main {
    ============================================================ */
 .barra-total {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
   z-index: 50;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  background: var(--superficie);
-  border-top: 1px solid var(--borde);
-  box-shadow: 0 -6px 24px rgba(21, 47, 112, 0.14);
+  background: var(--azul);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-alta);
   padding: 12px 16px;
-  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  padding-bottom: calc(12px + env(safe-area-inset-bottom) / 2);
   animation: subir-barra 250ms ease-out both;
 }
 
@@ -313,15 +338,15 @@ main {
 }
 
 .barra-total-info span {
-  font-size: 0.85rem;
-  color: var(--texto-suave);
-  font-weight: 600;
+  font-size: 0.82rem;
+  color: #C6D2F0;
+  font-weight: 700;
 }
 
 .barra-total-info strong {
   font-family: var(--fuente-titulos);
   font-size: 1.35rem;
-  color: var(--azul);
+  color: #fff;
   font-variant-numeric: tabular-nums;
 }
 
@@ -330,21 +355,20 @@ main {
   min-height: 48px;
   padding: 12px 22px;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 800;
   border: none;
-  border-radius: var(--radio);
-  transition: background var(--transicion), transform 120ms ease-out,
-              box-shadow var(--transicion);
+  border-radius: 14px;
+  transition: filter var(--transicion), background var(--transicion),
+              transform 120ms ease-out;
 }
 
 .btn:active { transform: scale(0.97); }
 
 .btn-primario {
-  background: var(--acento);
-  color: #fff;
-  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
+  background: var(--amarillo);
+  color: var(--azul-oscuro);
 }
-.btn-primario:hover { background: var(--acento-oscuro); }
+.btn-primario:hover { filter: brightness(0.95); }
 
 .btn-secundario {
   background: var(--superficie);
@@ -367,7 +391,7 @@ main {
   text-align: center;
   color: var(--texto-suave);
   font-size: 0.85rem;
-  padding: 8px 16px 130px;
+  padding: 8px 16px 140px;
 }
 
 .pie a { color: var(--azul); font-weight: 700; }
@@ -402,7 +426,7 @@ main {
   display: flex;
   align-items: center;
   gap: 16px;
-  border-bottom: 3px solid var(--azul);
+  border-bottom: 3px solid var(--amarillo);
   padding-bottom: 16px;
   margin-bottom: 16px;
 }
@@ -489,6 +513,7 @@ main {
   font-weight: 700;
   font-size: 1.1rem;
   color: var(--azul);
+  background: var(--amarillo-suave);
   border-bottom: none !important;
   padding-top: 14px !important;
 }
@@ -509,7 +534,7 @@ main {
   .cabecera-logo { height: 52px; }
   .cabecera-textos h1 { font-size: 1.7rem; }
 
-  .barra-filtros { padding: 14px 32px 12px; }
+  .barra-filtros { padding: 14px 32px 10px; }
   main { padding-left: 32px; padding-right: 32px; }
 
   .lista-productos { grid-template-columns: repeat(2, 1fr); gap: 14px; }
@@ -517,11 +542,9 @@ main {
   .barra-total {
     left: 50%;
     right: auto;
-    bottom: 16px;
+    bottom: 18px;
     transform: translateX(-50%);
-    width: min(680px, calc(100% - 48px));
-    border-radius: var(--radio);
-    border: 1px solid var(--borde);
+    width: min(640px, calc(100% - 48px));
   }
 
   @keyframes subir-barra {
@@ -548,7 +571,7 @@ main {
    ESCRITORIO GRANDE (≥1440px)
    ============================================================ */
 @media (min-width: 1440px) {
-  .lista-productos { grid-template-columns: repeat(4, 1fr); }
+  .lista-productos { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* ============================================================
@@ -576,6 +599,8 @@ main {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
+
+  .fila-total { background: #fff; }
 
   .tabla-cotizacion tbody tr { break-inside: avoid; }
 }

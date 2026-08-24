@@ -82,21 +82,22 @@
           </tr>
         </thead>
         <tbody id="cuerpo-cotizacion"></tbody>
-        <tfoot>
-          <tr>
-            <td colspan="4" class="fila-resumen">Subtotal</td>
-            <td class="col-num fila-resumen" id="subtotal-cotizacion">$0,00</td>
-          </tr>
-          <tr>
-            <td colspan="4" class="fila-resumen">I.V.A. (16%)</td>
-            <td class="col-num fila-resumen" id="iva-cotizacion">$0,00</td>
-          </tr>
-          <tr>
-            <td colspan="4" class="fila-total">TOTAL</td>
-            <td class="col-num fila-total" id="total-cotizacion">$0,00</td>
-          </tr>
-        </tfoot>
       </table>
+
+      <div class="resumen-cotizacion">
+        <div class="resumen-fila">
+          <span>Subtotal</span>
+          <strong id="subtotal-cotizacion">$0,00</strong>
+        </div>
+        <div class="resumen-fila">
+          <span>I.V.A. (16%)</span>
+          <strong id="iva-cotizacion">$0,00</strong>
+        </div>
+        <div class="resumen-fila resumen-total">
+          <span>TOTAL</span>
+          <strong id="total-cotizacion">$0,00</strong>
+        </div>
+      </div>
 
       <p class="hoja-nota">
         Precios en USD. El I.V.A. se muestra desglosado; los productos exentos no generan I.V.A.

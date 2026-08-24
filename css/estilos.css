@@ -516,23 +516,39 @@ main {
   font-variant-numeric: tabular-nums;
 }
 
-.fila-resumen {
-  font-weight: 700;
-  color: var(--texto-suave);
-  border-bottom: none !important;
-  padding-top: 10px !important;
-  padding-bottom: 2px !important;
+/* ---------- Resumen (fuera de la tabla: no se repite entre páginas del PDF) ---------- */
+.resumen-cotizacion {
+  margin-top: 14px;
+  margin-left: auto;
+  width: min(320px, 100%);
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 
-.fila-total {
-  font-family: var(--fuente-titulos);
+.resumen-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 12px;
   font-weight: 700;
+  color: var(--texto-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+.resumen-fila strong { color: var(--texto); }
+
+.resumen-total {
+  margin-top: 6px;
+  background: var(--amarillo-suave);
+  border-radius: 10px;
+  padding: 12px;
+  font-family: var(--fuente-titulos);
   font-size: 1.1rem;
   color: var(--azul);
-  background: var(--amarillo-suave);
-  border-bottom: none !important;
-  padding-top: 14px !important;
 }
+
+.resumen-total strong { color: var(--azul); }
 
 /* En pantallas angostas la tabla se compacta para que las 5 columnas cuadren */
 @media (max-width: 480px) {
@@ -552,8 +568,8 @@ main {
   .tabla-cotizacion th:nth-child(4) { width: 16%; }
   .tabla-cotizacion th:nth-child(5) { width: 20%; }
 
-  .fila-resumen { font-size: 0.82rem; }
-  .fila-total { font-size: 0.95rem; }
+  .resumen-fila { font-size: 0.85rem; }
+  .resumen-total { font-size: 1rem; }
 }
 
 .hoja-nota {
@@ -638,7 +654,11 @@ main {
     print-color-adjust: exact;
   }
 
-  .fila-total { background: #fff; }
+  .resumen-total {
+    background: var(--amarillo-suave) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 
   .tabla-cotizacion tbody tr { break-inside: avoid; }
 }

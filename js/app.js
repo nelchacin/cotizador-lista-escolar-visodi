@@ -168,6 +168,8 @@
     var visibles = productosFiltrados();
     porId("sin-resultados").hidden = visibles.length > 0;
     visibles.forEach(function (p) { lista.appendChild(crearTarjeta(p)); });
+    porId("contador-productos").textContent =
+      "Mostrando " + visibles.length + " de " + PRODUCTOS.length + " productos";
   }
 
   function cambiarCantidad(p, delta) {

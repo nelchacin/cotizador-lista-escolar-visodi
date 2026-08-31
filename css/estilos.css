@@ -393,6 +393,13 @@ main {
 
 .pie a { color: var(--azul); font-weight: 700; }
 
+.pie-contador {
+  margin-top: 6px;
+  font-size: 0.7rem;
+  color: var(--texto-suave);
+  opacity: 0.6;
+}
+
 /* ============================================================
    PANTALLA DE COTIZACIÓN
    ============================================================ */
